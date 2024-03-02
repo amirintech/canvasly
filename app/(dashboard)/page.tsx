@@ -3,7 +3,7 @@
 import { useOrganization } from "@clerk/clerk-react";
 
 import EmptyOrg from "./_components/empty-org";
-import BoardList from "./_components/board-list";
+import BoardList from "./_components/board/board-list";
 
 interface Props {
   searchParams: {

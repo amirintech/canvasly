@@ -1,3 +1,4 @@
+import { TooltipContentProps, TooltipProps } from "@radix-ui/react-tooltip";
 import {
   Tooltip as ShadcnTooltip,
   TooltipContent,
@@ -5,13 +6,8 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 
-interface Props {
+interface Props extends TooltipContentProps {
   label: string;
-  side?: "top" | "bottom" | "left" | "right";
-  align?: "start" | "center" | "end";
-  sideOffset?: number;
-  alignOffset?: number;
-  children: React.ReactNode;
 }
 
 export default function Tooltip({

@@ -3,13 +3,14 @@ import { Inter } from "next/font/google";
 
 import "./globals.css";
 import ConvexProvider from "@/components/providers/convex-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Miro Clone",
+  title: "Canvasly",
   description:
-    "With the Power of Miro, You Can Visually Collaborate Any Time Anywhere Across Your Company. Don't Let Distances or Timezones Stop You from Building Beautiful Products for Your Users. Project Management.",
+    "Unleash your team's brainstorming and sketching potential. Canvasly provides a collaborative space for free-flowing ideas and visual exploration, allowing your team to spark creativity and innovation. Seamless Collaboration, Infinite Creativity.",
 };
 
 export default function RootLayout({
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Toaster />
         <ConvexProvider>{children}</ConvexProvider>
       </body>
     </html>
