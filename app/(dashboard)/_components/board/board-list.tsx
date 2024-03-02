@@ -7,6 +7,8 @@ import EmptyState from "../empty-state";
 import EmptyBoard from "./empty-board";
 import BoardCard, { BoardCardSkeleton } from "./board-card";
 import NewBoardButton from "./new-board-button";
+import { useEffect, useState } from "react";
+import Board from "@/models/board";
 
 interface Props {
   orgId: string;
@@ -17,18 +19,22 @@ interface Props {
 }
 
 export default function BoardList({ orgId, query }: Props) {
-  const boards = useQuery(api.boards.getBoards, { orgId });
+  const apiBoards = useQuery(api.boards.getBoards, {
+    orgId,
+    name: query.search,
+    favorites: query.favorites,
+  });
+  const [boards, setBoards] = useState(apiBoards);
   const title = query.favorites ? "Favorite Boards" : "Team Boards";
 
-  const boardsList = (boards || Array(10).fill(null)).map((board) => {
-    return board ? (
-      <BoardCard key={board._id} board={board} />
-    ) : (
-      <BoardCardSkeleton key={Math.random()} />
-    );
-  });
+  useEffect(() => {
+    setBoards(apiBoards);
+  }, [apiBoards]);
 
-  if (!boards) return getStructure(title, boardsList);
+  const emptyBoards = Array(10)
+    .fill(null)
+    .map(() => <BoardCardSkeleton key={Math.random()} />);
+  if (!apiBoards || !boards) return getStructure(title, emptyBoards);
 
   if (!boards.length && query.search)
     return (
@@ -49,6 +55,23 @@ export default function BoardList({ orgId, query }: Props) {
     );
 
   if (!boards.length) return <EmptyBoard orgId={orgId} />;
+
+  const handleFavoriteChange = (id: string) => {
+    const index = boards.findIndex((board) => board._id === id);
+    if (index === -1) return;
+
+    const newBoards = [...boards];
+    newBoards[index].isFavorite = !newBoards[index].isFavorite;
+    setBoards(newBoards);
+  };
+
+  const boardsList = boards.map((board) => (
+    <BoardCard
+      key={board._id}
+      board={board as Board}
+      onFavoriteChange={handleFavoriteChange}
+    />
+  ));
 
   return getStructure(title, boardsList, orgId);
 }

@@ -9,7 +9,7 @@ export default function useApiMutation(func: FunctionReference<"mutation">) {
   const mutate = async (args: any) => {
     setPending(true);
     try {
-      await mutation(args);
+      return await mutation(args);
     } catch (e) {
       throw e;
     } finally {

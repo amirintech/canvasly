@@ -27,7 +27,6 @@ export default function Navbar() {
       },
       { skipEmptyString: true, skipNull: true }
     );
-    console.log(url);
     router.push(url);
   }, [value, router]);
 
