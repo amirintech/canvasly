@@ -9,10 +9,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../../../components/ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { toast } from "sonner";
-import { ConfirmDialog } from "../../../../components/shared/confirm-dialog";
-import { Button } from "../../../../components/ui/button";
+import { ConfirmDialog } from "./confirm-dialog";
+import { Button } from "../ui/button";
 import useApiMutation from "@/hooks/use-api-mutation";
 import { api } from "@/convex/_generated/api";
 import useRenameDialog from "@/hooks/use-rename-dialog";
@@ -23,6 +23,7 @@ interface Props {
   sideOffset?: DropdownMenuContentProps["sideOffset"];
   id: string;
   name: string;
+  onDelete?: () => void;
 }
 
 export default function Actions({
@@ -31,20 +32,23 @@ export default function Actions({
   side,
   sideOffset,
   name,
+  onDelete,
 }: Props) {
   const { isPending, mutate } = useApiMutation(api.board.deleteBoard);
   const { onOpen: openRenameDialog } = useRenameDialog();
 
   const handleCopyLink = () =>
     navigator.clipboard
-      .writeText(`${window.location.origin}/board/${id}`)
+      .writeText(`${window.location.origin}/boards/${id}`)
       .then(() => toast.success(`Link copied to clipboard!`))
       .catch(() => toast.error(`Failed to copy link!`));
 
-  const handleDelete = () =>
+  const handleDelete = () => {
     mutate({ id })
       .then(() => toast.success(`Board deleted!`))
       .catch(() => toast.error(`Failed to delete board!`));
+    onDelete?.();
+  };
 
   return (
     <DropdownMenu>

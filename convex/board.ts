@@ -1,9 +1,14 @@
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
 const images = Array(8)
   .fill("")
   .map((_, i) => `/boards/${i}.svg`);
+
+export const getBoard = query({
+  args: { id: v.id("boards") },
+  handler: (ctx, args) => ctx.db.get(args.id),
+});
 
 export const createBoard = mutation({
   args: { name: v.string(), orgId: v.string() },

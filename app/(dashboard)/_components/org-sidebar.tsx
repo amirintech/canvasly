@@ -24,7 +24,9 @@ export default function OrgSidebar() {
         <div className="relative w-10 h-10">
           <Image src="/icons/logo.svg" fill alt="" />
         </div>
-        <span className={cn("text-3xl font-black", font.className)}>Miro</span>
+        <span className={cn("text-3xl font-black", font.className)}>
+          Canvasly
+        </span>
       </Link>
 
       <OrgSwitcher />

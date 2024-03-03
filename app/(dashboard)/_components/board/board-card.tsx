@@ -9,7 +9,7 @@ import { GoHeart, GoHeartFill } from "react-icons/go";
 
 import Board from "@/models/board";
 import { Skeleton } from "@/components/ui/skeleton";
-import Actions from "@/app/(dashboard)/_components/board/actions";
+import Actions from "@/components/shared/actions";
 import useApiMutation from "@/hooks/use-api-mutation";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
@@ -40,13 +40,19 @@ export default function BoardCard({
   const { isPending: removeFavoritePending, mutate: onRemoveFavorite } =
     useApiMutation(api.board.removeFromFavorites);
 
-  const handleAddFavorite = () => {
+  const handleAddFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+
     onFavoriteChange(_id);
     onAddFavorite({ id: _id, orgId }).catch(() =>
       toast.error("Failed to add to favorites!")
     );
   };
-  const handleRemoveFavorite = () => {
+  const handleRemoveFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+
     onFavoriteChange(_id);
     onRemoveFavorite({ id: _id }).catch((e) =>
       toast.error("Failed to remove from favorites!")
