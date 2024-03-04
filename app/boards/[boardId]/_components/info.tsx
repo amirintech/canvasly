@@ -50,19 +50,17 @@ export default function Info({ boardId }: Props) {
 
       <div className="bg-neutral-300 h-8 w-[1px] rounded-full" />
 
-      <Tooltip label="Edit Board" side="bottom" sideOffset={8}>
-        <Actions
-          id={boardId}
-          name={board?.name ?? ""}
-          side="bottom"
-          sideOffset={8}
-          onDelete={() => router.push("/")}
-        >
-          <Button variant="ghost" className="p-1">
-            <Menu size={20} />
-          </Button>
-        </Actions>
-      </Tooltip>
+      <Actions
+        id={boardId}
+        name={board?.name ?? ""}
+        side="bottom"
+        sideOffset={8}
+        onDelete={() => router.push("/")}
+      >
+        <Button variant="ghost" className="p-1">
+          <Menu size={20} />
+        </Button>
+      </Actions>
     </div>
   );
 }

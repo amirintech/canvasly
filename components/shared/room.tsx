@@ -14,7 +14,7 @@ interface Props {
 
 export default function Room({ children, roomId, fallback }: Props) {
   return (
-    <RoomProvider id={roomId} initialPresence={{}}>
+    <RoomProvider id={roomId} initialPresence={{ cursor: null }}>
       <ClientSideSuspense fallback={fallback || <SpinningLoader />}>
         {() => children}
       </ClientSideSuspense>

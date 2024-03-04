@@ -4,6 +4,7 @@ import { useOthers, useSelf } from "@/liveblocks.config";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Tooltip from "@/components/shared/tooltip";
+import { mapConnectionIdToColor } from "@/lib/utils";
 
 const MAX_PARTICIPANTS_SHOWN = 3;
 
@@ -21,7 +22,7 @@ export default function Participants() {
           <li
             key={p.id}
             className="border-2 rounded-full"
-            style={{ borderColor: getBorderColor(p.connectionId) }}
+            style={{ borderColor: mapConnectionIdToColor(p.connectionId) }}
           >
             <Tooltip label={p.info.name} side="bottom" sideOffset={8}>
               <Avatar className="w-9 h-9">
@@ -44,24 +45,7 @@ export default function Participants() {
   );
 }
 
-function getBorderColor(connectionId: number) {
-  const colors = [
-    "#FF7F59",
-    "#00FF7F",
-    "#7F59FF",
-    "#FFA500",
-    "#FF7F59",
-    "#00FF7F",
-    "#7F59FF",
-    "#FFA500",
-    "#FF7F59",
-    "#00FF7F",
-  ];
-
-  return colors[connectionId % colors.length];
-}
-
-function getUniqueParticipants(participants: { id: string }[]) {
+export function getUniqueParticipants(participants: { id: string }[]) {
   return participants.reduce((prev: any[], curr) => {
     if (prev.findIndex((val) => val.id == curr.id) === -1) prev.push(curr);
     return prev;
